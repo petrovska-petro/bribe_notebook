@@ -1,0 +1,6 @@
+ethereum:
+  default_network: mainnet
+
+ethereum:
+    mainnet: 
+      default_provider: alchemy
