@@ -39,4 +39,7 @@ def votium_round_emissions_after_fee(cvx_mint_ratio, crv_price, cvx_price):
 
 def fxs_emissions_usd(fxs_price, fxs_weight, treasury_capture):
     emissions_usd = FXS_DAILY_EMISSIONS * fxs_price * ROUND_DAYS_DURATION
-    return emissions_usd * fxs_weight * treasury_capture
+    emissions_capture = emissions_usd * fxs_weight * treasury_capture
+    # fee taken from fxs rrev: https://docs.convexfinance.com/convexfinance/faq/fees#convex-for-frax
+    emissions_after_fee = emissions_capture * (1 - CVX_FEE)
+    return emissions_after_fee
