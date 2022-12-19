@@ -4,9 +4,10 @@ import pandas as pd
 
 CVX_FEE = 0.17
 ROUND_DAYS_DURATION = 14
+WEEK = 7
 
 # frax emission details
-FXS_DAILY_EMISSIONS = 12_500
+FXS_DAILY_EMISSIONS = 6250
 
 
 def cvx_mint_ratio(cvx, block_current_proposal):
@@ -36,9 +37,14 @@ def votium_round_emissions_after_fee(cvx_mint_ratio, crv_price, cvx_price):
     )
     return biweekly_emissions
 
+def fxs_weekly_emissions_usd(fxs_price):
+    return  (FXS_DAILY_EMISSIONS * fxs_price * WEEK) * (1 - CVX_FEE)
 
-def fxs_emissions_usd(fxs_price, fxs_weight, treasury_capture):
-    emissions_usd = FXS_DAILY_EMISSIONS * fxs_price * ROUND_DAYS_DURATION
+def fxs_emissions_usd(fxs_price, fxs_weight, treasury_capture, biweekly=True):
+    if biweekly:
+        emissions_usd = FXS_DAILY_EMISSIONS * fxs_price * ROUND_DAYS_DURATION
+    else:
+        emissions_usd = FXS_DAILY_EMISSIONS * fxs_price * WEEK
     emissions_capture = emissions_usd * fxs_weight * treasury_capture
     # fee taken from fxs rrev: https://docs.convexfinance.com/convexfinance/faq/fees#convex-for-frax
     emissions_after_fee = emissions_capture * (1 - CVX_FEE)
