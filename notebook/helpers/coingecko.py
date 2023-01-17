@@ -23,3 +23,11 @@ def get_votium_prices():
     fxs_price = prices["frax-share"]["usd"]
 
     return cvx_price, crv_price, badger_price, fxs_price
+
+
+def get_coll_prices():
+    prices = CoinGeckoAPI().get_price(["ethereum", "bitcoin"], "usd")
+    eth_price = prices["ethereum"]["usd"]
+    btc_price = prices["bitcoin"]["usd"]
+
+    return eth_price, btc_price

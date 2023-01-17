@@ -1,3 +1,5 @@
 eth-ape
 ape-etherscan
 notebook
+pycoingecko
+altair
